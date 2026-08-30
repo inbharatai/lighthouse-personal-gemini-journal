@@ -1,0 +1,6 @@
+{
+  "name": "Lighthouse",
+  "description": "Lighthouse is a private, consent-aware Personal Gemini Journal with Memory Lens, Ephemeral Reflection, and automatic structured turn summaries.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

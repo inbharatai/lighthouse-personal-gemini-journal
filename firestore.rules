@@ -1,0 +1,13 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Lighthouse is a server-mediated personal journal.
+    // The browser client has NO direct access to Firestore.
+    // All reads, writes, transactions, and deletions are mediated by the Cloud Run backend,
+    // which verifies the Firebase ID token and scopes every query beneath users/{verifiedUid}/...
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
