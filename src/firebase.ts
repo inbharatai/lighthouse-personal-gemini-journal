@@ -9,8 +9,6 @@ import {
   connectAuthEmulator,
   Auth,
 } from 'firebase/auth';
-import firebaseConfigFallback from '../firebase-applet-config.json';
-
 interface FirebaseConfig {
   apiKey: string;
   authDomain: string;
@@ -27,11 +25,11 @@ let initPromise: Promise<{ app: FirebaseApp; auth: Auth }> | null = null;
  * to ensure credentials are always up-to-date and not reliant on missing client-side env vars.
  */
 async function fetchFirebaseConfig(): Promise<FirebaseConfig> {
-  // Start with default fallback values
-  let apiKey = (firebaseConfigFallback.apiKey || import.meta.env.VITE_FIREBASE_API_KEY || '').trim();
-  let authDomain = (firebaseConfigFallback.authDomain || import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '').trim();
-  let projectId = (firebaseConfigFallback.projectId || import.meta.env.VITE_FIREBASE_PROJECT_ID || '').trim();
-  let appId = (firebaseConfigFallback.appId || import.meta.env.VITE_FIREBASE_APP_ID || '').trim();
+  // Start with default fallback values from client-side env vars if present
+  let apiKey = (import.meta.env.VITE_FIREBASE_API_KEY || '').trim();
+  let authDomain = (import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '').trim();
+  let projectId = (import.meta.env.VITE_FIREBASE_PROJECT_ID || '').trim();
+  let appId = (import.meta.env.VITE_FIREBASE_APP_ID || '').trim();
 
   try {
     const res = await fetch('/api/config', {
